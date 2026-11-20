@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_blind_navigation/modules/test_page/basic_test_controller.dart';
+import 'package:flutter_blind_navigation/modules/test_page/basic_test_page.dart';
+import 'package:flutter_blind_navigation/service/tts_service.dart';
+import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Get.putAsync(() => TtsService().init());
+  Get.lazyPut<BasicTestController>(() => BasicTestController());
   runApp(const MainApp());
 }
 
@@ -9,12 +16,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+    return const MaterialApp(home: BasicTestPage());
   }
 }

@@ -9,6 +9,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^4.7.3            # State management, DI, and routing
+  sqflite: ^2.4.2+1      # Local relational storage for nodes & edges
+  path: ^1.9.1           # Database file path resolution
+  nfc_manager: ^4.1.1    # NFC hardware session & tag reading
+  flutter_tts: ^4.2.5    # Native Turkish Text-to-Speech
+  more: ^4.7.0           # Graph data structures & shortestPath (Dijkstra)
+  speech_to_text: ^7.4.0 # Native Turkish Speech-to-Text
+
 
 dev_dependencies:
   flutter_test:
