@@ -14,28 +14,71 @@ class BasicTestPage extends GetView<BasicTestController> {
         backgroundColor: theme.colorScheme.primaryContainer,
       ),
 
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Seslendirici metni yazın...",
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          spacing: 16,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Seslendirici metni yazın...",
+                    ),
+                    onChanged: (value) => controller.textToSpeak.value = value,
                   ),
-                  onChanged: (value) => controller.text.value = value,
                 ),
-              ),
 
-              const SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: controller.speakText,
-                child: Text("Konuş"),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: controller.speakText,
+                  child: Text("Konuş"),
+                ),
+              ],
+            ),
+
+            Row(
+              children: [
+                Expanded(
+                  child: InputDecorator(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    child: Obx(
+                      () => Text(
+                        controller.textRecognized.value.isEmpty
+                            ? 'Mikrofona basıp konuşun'
+                            : controller.textRecognized.value,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                Obx(() {
+                  final listening = controller.isListening.value;
+
+                  return Semantics(
+                    label: listening ? 'Dinlemeyi Durdur' : 'Dinlemeyi Başlat',
+                    button: true,
+                    child: ElevatedButton(
+                      onPressed: controller.listenText,
+                      child: Icon(
+                        listening ? Icons.mic : Icons.mic_none,
+                        semanticLabel: listening
+                            ? 'Dinlemeyi durdur'
+                            : 'Dinlemeyi Başlat',
+                      ),
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
