@@ -77,6 +77,44 @@ class BasicTestPage extends GetView<BasicTestController> {
                 }),
               ],
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: InputDecorator(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    child: Obx(
+                      () => Text(
+                        controller.readedNfcId.value.isEmpty
+                            ? 'Okunan Nfc Id'
+                            : controller.readedNfcId.value,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                Obx(() {
+                  final isScanning = controller.isScanning.value;
+
+                  return Semantics(
+                    label: isScanning
+                        ? 'Nfc Okuma etkin'
+                        : 'Nfc Okuma Devre Dışı',
+                    button: true,
+                    child: ElevatedButton(
+                      onPressed: controller.scanNfc,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isScanning ? Colors.blue : Colors.red,
+                      ),
+                      child: Icon(Icons.nfc),
+                    ),
+                  );
+                }),
+              ],
+            ),
           ],
         ),
       ),
